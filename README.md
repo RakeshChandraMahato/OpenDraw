@@ -10,7 +10,7 @@
 
 **A fully offline, privacy-focused desktop whiteboard application for schools and educators**
 
-**Forked from [Excalidraw](https://github.com/excalidraw/excalidraw) with ❤️**
+**Forked from [Excalidraw](https://github.com/excalidraw/excalidraw)**
 
 [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Development](#development) • [Building](#building)
 
@@ -342,6 +342,6 @@ This project would not be possible without the incredible work of:
 
 <div align="center">
 
-**Made with ❤️ for educators and students**
+**Built for educators and students**
 
 </div>
