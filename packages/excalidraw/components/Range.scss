@@ -1,0 +1,65 @@
+@import "../css/variables.module.scss";
+
+.excalidraw {
+  --slider-thumb-size: 16px;
+
+  .range-wrapper {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 25px;
+    padding-right: 8px;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .range-input {
+    width: calc(100% - 8px);
+    max-width: calc(100% - 8px);
+    height: 4px;
+    -webkit-appearance: none;
+    background: var(--color-slider-track);
+    border-radius: 2px;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    background: var(--color-slider-thumb);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+
+  .range-input::-moz-range-thumb {
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    background: var(--color-slider-thumb);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+
+  .value-bubble {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: var(--text-primary-color);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .zero-label {
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    font-size: 12px;
+    color: var(--text-primary-color);
+    max-width: calc(100% - 8px);
+  }
+}

@@ -1,0 +1,134 @@
+// School Whiteboard Layout - Move toolbar and menus to bottom
+
+.excalidraw {
+  // Move the hamburger menu right next to the toolbar (to the right of it)
+  .App-menu_top__left {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    bottom: 1rem !important;
+    left: calc(50% + 290px) !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: calc(var(--zIndex-layerUI) + 10) !important;
+  }
+
+  // Make sure main menu is visible
+  .excalidraw-ui-top-left {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  // Move toolbar to bottom
+  .App-menu_top {
+    position: absolute;
+    bottom: 1rem;
+    top: auto !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    grid-template-columns: none;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    z-index: var(--zIndex-layerUI);
+
+    & > *:first-child {
+      justify-self: center;
+    }
+
+    & > *:last-child {
+      justify-self: center;
+    }
+  }
+
+  // Center the toolbar at bottom
+  .App-toolbar-container {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--zIndex-layerUI);
+  }
+
+  // Hide top menu items that are not needed
+  .App-menu_top > *:first-child,
+  .App-menu_top > *:last-child {
+    display: none;
+  }
+
+  // Keep only the center toolbar visible
+  .shapes-section {
+    display: flex !important;
+    pointer-events: auto !important;
+  }
+
+  // Hide the top-right wrapper (we're using top-left for hamburger menu)
+  .layer-ui__wrapper__top-right {
+    display: none !important;
+  }
+
+  // Make toolbar dropdowns open upward when at bottom
+  .App-toolbar__extra-tools-dropdown,
+  .Island.dropdown-menu-container {
+    bottom: 100% !important;
+    top: auto !important;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  // Keep main menu dropdown opening normally (downward from top-left)
+  .dropdown-menu-container {
+    position: absolute;
+  }
+
+  // Make main menu dropdown open upward from bottom-left
+  .App-menu_top__left .dropdown-menu,
+  .App-menu_top__left .Island {
+    position: absolute !important;
+    bottom: 100% !important;
+    top: auto !important;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  // Move Selected Shape Actions panel to left side, aligned from bottom
+  .selected-shape-actions-container {
+    position: fixed !important;
+    left: 1rem !important;
+    bottom: 5rem !important;
+    top: auto !important;
+    transform: none !important;
+    z-index: calc(var(--zIndex-layerUI) + 5) !important;
+  }
+
+  .selected-shape-actions {
+    max-height: calc(100vh - 12rem) !important;
+    overflow-y: auto !important;
+  }
+
+  // Adjust footer to not overlap with bottom toolbar
+  .App-menu_bottom {
+    bottom: 5rem;
+  }
+
+  // Make canvas use full height
+  .excalidraw-canvas-container {
+    height: 100%;
+  }
+
+  // Ensure all dropdowns open upward
+  [role="dialog"],
+  .popover {
+    &[data-radix-popper-content-wrapper] {
+      bottom: 100% !important;
+      top: auto !important;
+    }
+  }
+}
