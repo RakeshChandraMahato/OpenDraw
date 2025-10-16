@@ -103,6 +103,8 @@ import {
 } from "./components/ExportToExcalidrawPlus";
 import { RustExportDialog } from "./components/RustExportDialog";
 import { TopErrorBoundary } from "./components/TopErrorBoundary";
+import { EncryptedIcon } from "./components/EncryptedIcon";
+import { ExcalidrawPlusAppLink } from "./components/ExcalidrawPlusAppLink";
 
 import {
   // exportToBackend, // Removed for offline mode
@@ -631,6 +633,7 @@ const ExcalidrawWrapper = () => {
         initialData={initialStatePromiseRef.current.promise}
         isCollaborating={isCollaborating}
         onPointerUpdate={undefined}
+        aiEnabled={false}
         UIOptions={{
           canvasActions: {
             toggleTheme: true,
@@ -665,7 +668,7 @@ const ExcalidrawWrapper = () => {
             saveAsImage: false,
           },
           tools: {
-            image: false,
+            image: true,
           },
         }}
         langCode={langCode}

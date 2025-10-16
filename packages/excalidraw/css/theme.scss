@@ -60,8 +60,8 @@
   --scrollbar-thumb: var(--button-gray-2);
   --scrollbar-thumb-hover: var(--button-gray-3);
 
-  --color-slider-track: hsl(240, 100%, 90%);
-  --color-slider-thumb: var(--color-gray-80);
+  --color-slider-track: hsl(30, 100%, 90%);
+  --color-slider-thumb: #ff8c00;
 
   --modal-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07),
     0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198),
@@ -154,18 +154,18 @@
   --border-radius-md: 0.375rem;
   --border-radius-lg: 0.5rem;
 
-  --color-surface-high: #f1f0ff;
-  --color-surface-mid: #f6f6f9;
-  --color-surface-low: #ececf4;
+  --color-surface-high: #fff5eb;
+  --color-surface-mid: #fff9f5;
+  --color-surface-low: #fff2e6;
   --color-surface-lowest: #ffffff;
   --color-on-surface: #1b1b1f;
-  --color-brand-hover: #5753d0;
-  --color-on-primary-container: #030064;
-  --color-surface-primary-container: #e0dfff;
-  --color-brand-active: #4440bf;
+  --color-brand-hover: #ff9933;
+  --color-on-primary-container: #663300;
+  --color-surface-primary-container: #ffe5cc;
+  --color-brand-active: #ff8c00;
   --color-border-outline: #767680;
   --color-border-outline-variant: #c5c5d0;
-  --color-surface-primary-container: #e0dfff;
+  --color-surface-primary-container: #ffe5cc;
 
   --color-badge: #0b6513;
   --background-color-badge: #d3ffd2;
@@ -219,7 +219,8 @@
     --scrollbar-thumb: #{$oc-gray-8};
     --scrollbar-thumb-hover: #{$oc-gray-7};
 
-    --color-slider-track: hsl(244, 23%, 39%);
+    --color-slider-track: hsl(30, 40%, 45%);
+    --color-slider-thumb: #ffb366;
 
     // will be inverted to a lighter color.
     --color-selection: #3530c4;
@@ -262,16 +263,16 @@
     --color-logo-text: #e2dfff;
 
     --color-surface-high: #2e2d39;
-    --color-surface-low: hsl(240, 8%, 15%);
-    --color-surface-mid: hsl(240 6% 10%);
+    --color-surface-low: hsl(30, 8%, 15%);
+    --color-surface-mid: hsl(30, 6%, 10%);
     --color-surface-lowest: hsl(0, 0%, 7%);
     --color-on-surface: #e3e3e8;
-    --color-brand-hover: #bbb8ff;
-    --color-on-primary-container: #e0dfff;
-    --color-surface-primary-container: #403e6a;
-    --color-brand-active: #d0ccff;
+    --color-brand-hover: #ffcc99;
+    --color-on-primary-container: #ffe5cc;
+    --color-surface-primary-container: #664020;
+    --color-brand-active: #ffb366;
     --color-border-outline: #8e8d9c;
     --color-border-outline-variant: #46464f;
-    --color-surface-primary-container: #403e6a;
+    --color-surface-primary-container: #664020;
   }
 }
