@@ -1,15 +1,19 @@
 .calculator-container {
-  position: fixed;
+  position: fixed !important;
   width: 130px;
   background-color: #22252d;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  overflow: hidden;
+  z-index: 999999 !important;
+  overflow: visible !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   user-select: none;
   transition: width 0.2s ease;
   will-change: width;
+  pointer-events: auto !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   
   &.scientific {
     width: 270px;

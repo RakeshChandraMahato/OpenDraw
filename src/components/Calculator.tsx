@@ -13,7 +13,7 @@ export const Calculator = ({ onClose }: CalculatorProps) => {
   const [isScientific, setIsScientific] = useState(false);
   const [position, setPosition] = useState(() => {
     const saved = localStorage.getItem("calculator-position");
-    return saved ? JSON.parse(saved) : { x: 100, y: 100 };
+    return saved ? JSON.parse(saved) : { x: window.innerWidth / 2 - 65, y: window.innerHeight / 2 - 200 };
   });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });

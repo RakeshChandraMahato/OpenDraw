@@ -13,7 +13,9 @@ export const AppWelcomeScreen: React.FC = React.memo(() => {
       <WelcomeScreen.Center>
         <WelcomeScreen.Center.Logo />
         <WelcomeScreen.Center.Heading>
-          OpenDraw - Offline Whiteboard
+          <div style={{ fontSize: '1rem', fontWeight: 'normal', color: 'var(--color-gray-50)', marginTop: '1rem' }}>
+            OpenDraw by RakeshXapp
+          </div>
         </WelcomeScreen.Center.Heading>
         <WelcomeScreen.Center.Heading>
           <div style={{ fontSize: '0.9rem', fontWeight: 'normal', marginTop: '1rem', lineHeight: '1.8' }}>
