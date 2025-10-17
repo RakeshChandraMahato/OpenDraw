@@ -475,17 +475,28 @@ body.excalidraw-cursor-resize * {
     background-color: var(--island-bg-color);
     color: var(--icon-fill-color);
 
-    border: 1px solid var(--default-border-color);
-    padding: 10px 20px;
+    border: 2px solid var(--default-border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 12px;
     position: absolute;
     left: 50%;
-    bottom: 30px;
+    bottom: 90px;
     transform: translateX(-50%);
     pointer-events: var(--ui-pointerEvents);
     font-family: inherit;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    svg {
+      display: block;
+    }
 
     &:hover {
       background-color: var(--button-hover-bg);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     }
 
     &:active {
@@ -549,14 +560,14 @@ body.excalidraw-cursor-resize * {
     opacity: 1;
     height: auto;
     width: auto;
-    transition: opacity 0.5s;
+    transition: opacity 0.3s;
 
     &.zen-mode-visibility--hidden {
       visibility: hidden;
       opacity: 0;
       height: 0;
       width: 0;
-      transition: opacity 0.5s;
+      transition: opacity 0.3s;
     }
   }
 

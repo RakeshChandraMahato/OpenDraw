@@ -87,7 +87,7 @@ export const TabbedApp = ({ children, excalidrawAPI, theme }: TabbedAppProps) =>
       <div style={{ 
         flex: 1, 
         overflow: "hidden", 
-        marginRight: isTabsOpen ? "200px" : "0", 
+        marginRight: isTabsOpen ? "224px" : "0", 
         position: "relative",
         transition: "margin-right 0.3s ease"
       }}>

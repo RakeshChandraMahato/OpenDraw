@@ -1,9 +1,30 @@
-.tab-toggle-button {
+.tab-bar-container {
   position: fixed;
-  top: 50%;
+  top: 0;
   right: 0;
+  bottom: 0;
+  width: 224px;
+  z-index: 999;
+  background-color: #fffffe;
+  border-left: 2px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+
+  &.closed {
+    transform: translateX(100%);
+  }
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.tab-toggle-button {
+  position: absolute;
+  top: 50%;
+  left: -24px;
   transform: translateY(-50%);
-  z-index: 1000;
   width: 24px;
   height: 64px;
   background-color: #fffffe;
@@ -26,28 +47,6 @@
   background-color: #232329;
   border-color: #2e2d39;
   color: #e3e3e8;
-}
-
-.tab-bar-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 200px;
-  z-index: 999;
-  background-color: #fffffe;
-  border-left: 2px solid #e9ecef;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-
-  &.closed {
-    transform: translateX(100%);
-  }
-
-  &.open {
-    transform: translateX(0);
-  }
 }
 
 .theme--dark .tab-bar-container {

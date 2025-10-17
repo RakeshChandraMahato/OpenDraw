@@ -127,21 +127,21 @@ export const TabBar = ({
 
   return (
     <>
-      <button
-        className="tab-toggle-button"
-        onClick={() => onToggle(!isOpen)}
-        aria-label={isOpen ? "Close tabs" : "Open tabs"}
-        title={isOpen ? "Close tabs" : "Open tabs"}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          {isOpen ? (
-            <path d="M10 3L6 8l4 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-          ) : (
-            <path d="M6 3l4 5-4 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-          )}
-        </svg>
-      </button>
       <div className={`tab-bar-container ${isOpen ? "open" : "closed"}`}>
+        <button
+          className="tab-toggle-button"
+          onClick={() => onToggle(!isOpen)}
+          aria-label={isOpen ? "Close tabs" : "Open tabs"}
+          title={isOpen ? "Close tabs" : "Open tabs"}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            {isOpen ? (
+              <path d="M10 3L6 8l4 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            ) : (
+              <path d="M6 3l4 5-4 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            )}
+          </svg>
+        </button>
         <div className="tab-bar">
           {tabs.map((tab) => (
             <div

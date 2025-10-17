@@ -622,8 +622,11 @@ const LayerUI = ({
                     ...calculateScrollCenter(elements, appState),
                   }));
                 }}
+                aria-label={t("buttons.scrollBackToContent")}
               >
-                {t("buttons.scrollBackToContent")}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 12 10 7 5 12" />
+                </svg>
               </button>
             )}
           </div>
