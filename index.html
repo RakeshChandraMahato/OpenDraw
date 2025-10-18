@@ -114,6 +114,8 @@
 
     <% } else { %>
     <script>
+      window.OPENDRAW_ASSET_PATH = window.origin;
+      // Legacy support
       window.EXCALIDRAW_ASSET_PATH = window.origin;
     </script>
     <% } %>

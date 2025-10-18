@@ -402,7 +402,7 @@ export interface AppState {
   offsetTop: number;
   offsetLeft: number;
 
-  fileHandle: FileSystemHandle | null;
+  fileHandle: FileSystemFileHandle | null;
   collaborators: Map<SocketId, Collaborator>;
   stats: {
     open: boolean;

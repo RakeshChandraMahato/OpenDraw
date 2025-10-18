@@ -2,7 +2,7 @@
   position: fixed !important;
   width: 130px;
   background-color: #22252d;
-  border-radius: 16px;
+  border-radius: 0px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   z-index: 999999 !important;
   overflow: visible !important;
@@ -57,24 +57,24 @@
 .calc-mode-toggle {
   background: none;
   border: none;
-  color: #00d9ff;
-  font-size: 10px;
+  color: #ff6b6b;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 6px 12px;
   border-radius: 4px;
   z-index: 1;
   
   &:hover {
-    background-color: rgba(0, 217, 255, 0.08);
+    background-color: rgba(255, 107, 107, 0.08);
   }
 }
 
 .theme--light .calc-mode-toggle {
-  color: #007aff;
+  color: #ff3b30;
   
   &:hover {
-    background-color: rgba(0, 122, 255, 0.08);
+    background-color: rgba(255, 59, 48, 0.08);
   }
 }
 
@@ -124,10 +124,10 @@
 }
 
 .calculator-expression {
-  font-size: 8px;
+  font-size: 10px;
   color: #6b6b6b;
   font-weight: 300;
-  min-height: 10px;
+  min-height: 12px;
   letter-spacing: 0.3px;
 }
 
@@ -136,7 +136,7 @@
 }
 
 .calculator-result {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 200;
   line-height: 1;
   letter-spacing: -0.8px;
@@ -160,7 +160,7 @@
   border: none;
   padding: 0;
   height: 26px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
   color: white;
   cursor: pointer;
@@ -192,27 +192,27 @@
 
 .calc-btn-function {
   background-color: transparent;
-  color: #00d9ff;
-  font-size: 11px;
+  color: #ff6b6b;
+  font-size: 13px;
   font-weight: 300;
   
   &:hover {
-    background-color: rgba(0, 217, 255, 0.08);
+    background-color: rgba(255, 107, 107, 0.08);
   }
   
   &:active {
-    background-color: rgba(0, 217, 255, 0.15);
+    background-color: rgba(255, 107, 107, 0.15);
   }
 }
 
 .theme--light .calc-btn-function {
-  color: #007aff;
+  color: #ff3b30;
 }
 
 .calc-btn-operator {
   background-color: transparent;
   color: #ff6b6b;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   
   &:hover {
@@ -231,7 +231,7 @@
 .calc-btn-undo {
   background-color: transparent;
   color: white;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .theme--light .calc-btn-undo {
@@ -241,7 +241,7 @@
 .calc-btn-equals {
   background-color: transparent;
   color: #ff6b6b;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   
   &:hover {
@@ -259,27 +259,27 @@
 
 .calc-btn-scientific {
   background-color: transparent;
-  color: #00d9ff;
-  font-size: 10px;
+  color: #ff6b6b;
+  font-size: 12px;
   font-weight: 300;
   
   &:hover {
-    background-color: rgba(0, 217, 255, 0.08);
+    background-color: rgba(255, 107, 107, 0.08);
   }
   
   &:active {
-    background-color: rgba(0, 217, 255, 0.15);
+    background-color: rgba(255, 107, 107, 0.15);
   }
 }
 
 .theme--light .calc-btn-scientific {
-  color: #007aff;
+  color: #ff3b30;
   
   &:hover {
-    background-color: rgba(0, 122, 255, 0.08);
+    background-color: rgba(255, 59, 48, 0.08);
   }
   
   &:active {
-    background-color: rgba(0, 122, 255, 0.15);
+    background-color: rgba(255, 59, 48, 0.15);
   }
 }

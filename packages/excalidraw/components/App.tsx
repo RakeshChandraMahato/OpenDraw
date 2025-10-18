@@ -10661,7 +10661,7 @@ class App extends React.Component<AppProps, AppState> {
 
   loadFileToCanvas = async (
     file: File,
-    fileHandle: FileSystemHandle | null,
+    fileHandle: FileSystemFileHandle | null,
   ) => {
     file = await normalizeFile(file);
     try {
@@ -10699,7 +10699,19 @@ class App extends React.Component<AppProps, AppState> {
         return;
       }
 
-      if (ret.type === MIME_TYPES.excalidraw) {
+      if (ret.type === MIME_TYPES.excalidrawlib) {
+        await this.library
+          .updateLibrary({
+            libraryItems: file,
+            merge: true,
+            openLibraryMenu: true,
+          })
+          .catch((error) => {
+            console.error(error);
+            this.setState({ errorMessage: t("errors.importLibraryError") });
+          });
+      } else {
+        // Handle drawing files (opendraw/excalidraw)
         // restore the fractional indices by mutating elements
         syncInvalidIndices(elements.concat(ret.data.elements));
 
@@ -10721,17 +10733,6 @@ class App extends React.Component<AppProps, AppState> {
           replaceFiles: true,
           captureUpdate: CaptureUpdateAction.IMMEDIATELY,
         });
-      } else if (ret.type === MIME_TYPES.excalidrawlib) {
-        await this.library
-          .updateLibrary({
-            libraryItems: file,
-            merge: true,
-            openLibraryMenu: true,
-          })
-          .catch((error) => {
-            console.error(error);
-            this.setState({ errorMessage: t("errors.importLibraryError") });
-          });
       }
     } catch (error: any) {
       this.setState({ isLoading: false, errorMessage: error.message });

@@ -88,7 +88,7 @@ export const getMimeType = (blob: Blob | string): string => {
     }
     name = blob.name || "";
   }
-  if (/\.(excalidraw|json)$/.test(name)) {
+  if (/\.(opendraw|excalidraw|json)$/.test(name)) {
     return MIME_TYPES.json;
   } else if (/\.png$/.test(name)) {
     return MIME_TYPES.png;
@@ -102,12 +102,12 @@ export const getMimeType = (blob: Blob | string): string => {
   return "";
 };
 
-export const getFileHandleType = (handle: FileSystemHandle | null) => {
+export const getFileHandleType = (handle: FileSystemHandle | FileSystemFileHandle | null) => {
   if (!handle) {
     return null;
   }
 
-  return handle.name.match(/\.(json|excalidraw|png|svg)$/)?.[1] || null;
+  return handle.name.match(/\.(json|opendraw|excalidraw|png|svg)$/)?.[1] || null;
 };
 
 export const isImageFileHandleType = (
@@ -116,7 +116,7 @@ export const isImageFileHandleType = (
   return type === "png" || type === "svg";
 };
 
-export const isImageFileHandle = (handle: FileSystemHandle | null) => {
+export const isImageFileHandle = (handle: FileSystemHandle | FileSystemFileHandle | null) => {
   const type = getFileHandleType(handle);
   return type === "png" || type === "svg";
 };
@@ -138,7 +138,7 @@ export const loadSceneOrLibraryFromBlob = async (
   localAppState: AppState | null,
   localElements: readonly ExcalidrawElement[] | null,
   /** FileSystemHandle. Defaults to `blob.handle` if defined, otherwise null. */
-  fileHandle?: FileSystemHandle | null,
+  fileHandle?: FileSystemFileHandle | null,
 ) => {
   const contents = await parseFileContents(blob);
   let data;
@@ -156,7 +156,7 @@ export const loadSceneOrLibraryFromBlob = async (
     }
     if (isValidExcalidrawData(data)) {
       return {
-        type: MIME_TYPES.excalidraw,
+        type: MIME_TYPES.opendraw,
         data: restore(
           {
             elements: clearElementsForExport(data.elements || []),
@@ -200,7 +200,7 @@ export const loadFromBlob = async (
   localAppState: AppState | null,
   localElements: readonly ExcalidrawElement[] | null,
   /** FileSystemHandle. Defaults to `blob.handle` if defined, otherwise null. */
-  fileHandle?: FileSystemHandle | null,
+  fileHandle?: FileSystemFileHandle | null,
 ) => {
   const ret = await loadSceneOrLibraryFromBlob(
     blob,
@@ -208,7 +208,8 @@ export const loadFromBlob = async (
     localElements,
     fileHandle,
   );
-  if (ret.type !== MIME_TYPES.excalidraw) {
+  // Reject library files, accept drawing files (opendraw/excalidraw)
+  if (ret.type === MIME_TYPES.excalidrawlib) {
     throw new Error("Error: invalid file");
   }
   return ret.data;
@@ -393,7 +394,7 @@ export const ImageURLToFile = async (
 
 export const getFileHandle = async (
   event: DragEvent | React.DragEvent | DataTransferItem,
-): Promise<FileSystemHandle | null> => {
+): Promise<FileSystemFileHandle | null> => {
   if (nativeFileSystemSupported) {
     try {
       const dataTransferItem =
@@ -401,7 +402,7 @@ export const getFileHandle = async (
           ? event
           : (event as DragEvent).dataTransfer?.items?.[0];
 
-      const handle: FileSystemHandle | null =
+      const handle: FileSystemFileHandle | null =
         (await (dataTransferItem as any).getAsFileSystemHandle()) || null;
 
       return handle;
@@ -472,6 +473,8 @@ export const normalizeFile = async (file: File) => {
 
   if (file?.name?.endsWith(".excalidrawlib")) {
     file = createFile(file, MIME_TYPES.excalidrawlib, file.name);
+  } else if (file?.name?.endsWith(".opendraw")) {
+    file = createFile(file, MIME_TYPES.opendraw, file.name);
   } else if (file?.name?.endsWith(".excalidraw")) {
     file = createFile(file, MIME_TYPES.excalidraw, file.name);
   } else if (!file.type || file.type?.startsWith("image/")) {

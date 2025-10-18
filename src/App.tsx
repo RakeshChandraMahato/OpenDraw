@@ -31,7 +31,7 @@ import {
   isDevEnv,
 } from "@excalidraw/common";
 import polyfill from "@excalidraw/excalidraw/polyfill";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { loadFromBlob } from "@excalidraw/excalidraw/data/blob";
 import { useCallbackRefState } from "@excalidraw/excalidraw/hooks/useCallbackRefState";
 import { t } from "@excalidraw/excalidraw/i18n";
@@ -48,6 +48,7 @@ import {
 } from "@excalidraw/excalidraw/components/icons";
 import { isElementLink } from "@excalidraw/element";
 import { restore, restoreAppState } from "@excalidraw/excalidraw/data/restore";
+import { checkCollision, calculateBounds } from "./utils/rustBackend";
 import { newElementWith } from "@excalidraw/element";
 import { isInitializedImageElement } from "@excalidraw/element";
 import clsx from "clsx";
@@ -544,7 +545,7 @@ const ExcalidrawWrapper = () => {
     throw new Error("Export to backend is not available in offline mode");
   };
 
-  const renderCustomStats = (
+  const renderCustomStats = useCallback((
     elements: readonly NonDeletedExcalidrawElement[],
     appState: UIAppState,
   ) => {
@@ -555,7 +556,7 @@ const ExcalidrawWrapper = () => {
         elements={elements}
       />
     );
-  };
+  }, [excalidrawAPI]);
 
   const isOffline = false; // Offline mode
 
@@ -677,18 +678,18 @@ const ExcalidrawWrapper = () => {
         handleKeyboardGlobally={true}
         autoFocus={true}
         theme={editorTheme}
-        renderTopRightUI={() => null}
-        onLinkOpen={(element, event) => {
+        renderTopRightUI={useCallback(() => null, [])}
+        onLinkOpen={useCallback((element: NonDeletedExcalidrawElement, event: CustomEvent) => {
           if (element.link && isElementLink(element.link)) {
             event.preventDefault();
             excalidrawAPI?.scrollToContent(element.link, { animate: true });
           }
-        }}
+        }, [excalidrawAPI])}
       >
         <AppMainMenu
           theme={appTheme}
           setTheme={(theme) => setAppTheme(theme)}
-          refresh={() => forceRefresh((prev) => !prev)}
+          refresh={useCallback(() => forceRefresh((prev) => !prev), [])}
         />
         <AppWelcomeScreen />
         <OverwriteConfirmDialog>
@@ -711,7 +712,7 @@ const ExcalidrawWrapper = () => {
             </OverwriteConfirmDialog.Action>
           )}
         </OverwriteConfirmDialog>
-        <AppFooter onChange={() => excalidrawAPI?.refresh()} />
+        <AppFooter onChange={useCallback(() => excalidrawAPI?.refresh(), [excalidrawAPI])} />
 
         {/* Collaboration removed for offline mode */}
 

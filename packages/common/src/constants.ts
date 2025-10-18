@@ -265,7 +265,9 @@ export const STRING_MIME_TYPES = {
   text: "text/plain",
   html: "text/html",
   json: "application/json",
-  // excalidraw data
+  // opendraw data
+  opendraw: "application/vnd.opendraw+json",
+  // excalidraw data (legacy support)
   excalidraw: "application/vnd.excalidraw+json",
   // LEGACY: fully-qualified library JSON data
   excalidrawlib: "application/vnd.excalidrawlib+json",
@@ -275,7 +277,10 @@ export const STRING_MIME_TYPES = {
 
 export const MIME_TYPES = {
   ...STRING_MIME_TYPES,
-  // image-encoded excalidraw data
+  // image-encoded opendraw data
+  "opendraw.svg": "image/svg+xml",
+  "opendraw.png": "image/png",
+  // image-encoded excalidraw data (legacy support)
   "excalidraw.svg": "image/svg+xml",
   "excalidraw.png": "image/png",
   // binary

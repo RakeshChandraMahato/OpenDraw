@@ -380,7 +380,7 @@ type AllowedParsedDataTransferItem =
       type: ValueOf<typeof IMAGE_MIME_TYPES>;
       kind: "file";
       file: File;
-      fileHandle: FileSystemHandle | null;
+      fileHandle: FileSystemFileHandle | null;
     }
   | { type: ValueOf<typeof STRING_MIME_TYPES>; kind: "string"; value: string };
 
@@ -389,7 +389,7 @@ type ParsedDataTransferItem =
       type: string;
       kind: "file";
       file: File;
-      fileHandle: FileSystemHandle | null;
+      fileHandle: FileSystemFileHandle | null;
     }
   | { type: string; kind: "string"; value: string };
 

@@ -42,40 +42,6 @@ export const fileOpen = async <M extends boolean | undefined = false>(opts: {
     extensions,
     mimeTypes,
     multiple: opts.multiple ?? false,
-    legacySetup: (resolve, reject, input) => {
-      const scheduleRejection = debounce(reject, INPUT_CHANGE_INTERVAL_MS);
-      const focusHandler = () => {
-        checkForFile();
-        document.addEventListener(EVENT.KEYUP, scheduleRejection);
-        document.addEventListener(EVENT.POINTER_UP, scheduleRejection);
-        scheduleRejection();
-      };
-      const checkForFile = () => {
-        // this hack might not work when expecting multiple files
-        if (input.files?.length) {
-          const ret = opts.multiple ? [...input.files] : input.files[0];
-          resolve(ret as RetType);
-        }
-      };
-      requestAnimationFrame(() => {
-        window.addEventListener(EVENT.FOCUS, focusHandler);
-      });
-      const interval = window.setInterval(() => {
-        checkForFile();
-      }, INPUT_CHANGE_INTERVAL_MS);
-      return (rejectPromise) => {
-        clearInterval(interval);
-        scheduleRejection.cancel();
-        window.removeEventListener(EVENT.FOCUS, focusHandler);
-        document.removeEventListener(EVENT.KEYUP, scheduleRejection);
-        document.removeEventListener(EVENT.POINTER_UP, scheduleRejection);
-        if (rejectPromise) {
-          // so that something is shown in console if we need to debug this
-          console.warn("Opening the file was canceled (legacy-fs).");
-          rejectPromise(new AbortError());
-        }
-      };
-    },
   });
 
   if (Array.isArray(files)) {
@@ -96,7 +62,7 @@ export const fileSave = (
     mimeTypes?: string[];
     description: string;
     /** existing FileSystemHandle */
-    fileHandle?: FileSystemHandle | null;
+    fileHandle?: FileSystemFileHandle | null;
   },
 ) => {
   return _fileSave(

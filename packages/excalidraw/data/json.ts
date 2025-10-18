@@ -84,13 +84,13 @@ export const saveAsJSON = async (
 ) => {
   const serialized = serializeAsJSON(elements, appState, files, "local");
   const blob = new Blob([serialized], {
-    type: MIME_TYPES.excalidraw,
+    type: MIME_TYPES.opendraw,
   });
 
   const fileHandle = await fileSave(blob, {
     name,
-    extension: "excalidraw",
-    description: "Excalidraw file",
+    extension: "opendraw",
+    description: "OpenDraw file",
     fileHandle: isImageFileHandle(appState.fileHandle)
       ? null
       : appState.fileHandle,
@@ -103,10 +103,10 @@ export const loadFromJSON = async (
   localElements: readonly ExcalidrawElement[] | null,
 ) => {
   const file = await fileOpen({
-    description: "Excalidraw files",
+    description: "OpenDraw files",
     // ToDo: Be over-permissive until https://bugs.webkit.org/show_bug.cgi?id=34442
-    // gets resolved. Else, iOS users cannot open `.excalidraw` files.
-    // extensions: ["json", "excalidraw", "png", "svg"],
+    // gets resolved. Else, iOS users cannot open `.opendraw` files.
+    // extensions: ["json", "opendraw", "png", "svg"],
   });
   return loadFromBlob(file, localAppState, localElements, file.handle);
 };
