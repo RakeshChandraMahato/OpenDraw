@@ -1,86 +1,109 @@
 .excalidraw {
   .ExcalidrawLogo {
-    --logo-icon--mobile: 1rem;
-    --logo-text--mobile: 0.75rem;
-
-    --logo-icon--xs: 2rem;
-    --logo-text--xs: 1.5rem;
-
-    --logo-icon--small: 2.5rem;
-    --logo-text--small: 1.75rem;
-
-    --logo-icon--normal: 3rem;
-    --logo-text--normal: 2.2rem;
-
-    --logo-icon--large: 90px;
-    --logo-text--large: 65px;
-
     display: flex;
     align-items: center;
 
-    svg {
-      flex: 0 0 auto;
-    }
-
     .ExcalidrawLogo-icon {
       width: auto;
-      color: var(--color-logo-icon);
+      object-fit: contain;
+      flex-shrink: 0;
     }
 
     .ExcalidrawLogo-text {
-      margin-left: 0.75rem;
-      width: auto;
-      color: var(--color-logo-text);
+      margin-left: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.1;
+      user-select: none;
+
+      .ExcalidrawLogo-title {
+        font-family: "Virgil", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        color: var(--color-on-surface, currentColor);
+      }
+
+      .ExcalidrawLogo-subtitle {
+        font-family: "Virgil", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 600;
+        color: var(--color-primary, #ea580c);
+        letter-spacing: 0.04em;
+        line-height: 1.2;
+        margin-top: 3px;
+        white-space: nowrap;
+      }
     }
 
     &.is-mobile {
       .ExcalidrawLogo-icon {
-        height: var(--logo-icon--mobile);
+        height: 2rem;
       }
-
-      .ExcalidrawLogo-text {
-        height: var(--logo-text--mobile);
-        margin-left: 0.5rem;
+      .ExcalidrawLogo-title {
+        font-size: 1.35rem;
+      }
+      .ExcalidrawLogo-subtitle {
+        font-size: 0.82rem;
       }
     }
 
     &.is-xs {
       .ExcalidrawLogo-icon {
-        height: var(--logo-icon--xs);
+        height: 2.25rem;
       }
-
-      .ExcalidrawLogo-text {
-        height: var(--logo-text--xs);
+      .ExcalidrawLogo-title {
+        font-size: 1.5rem;
+      }
+      .ExcalidrawLogo-subtitle {
+        font-size: 0.88rem;
       }
     }
 
     &.is-small {
       .ExcalidrawLogo-icon {
-        height: var(--logo-icon--small);
+        height: 3rem;
       }
-
-      .ExcalidrawLogo-text {
-        height: var(--logo-text--small);
+      .ExcalidrawLogo-title {
+        font-size: 2rem;
+      }
+      .ExcalidrawLogo-subtitle {
+        font-size: 1.05rem;
       }
     }
 
     &.is-normal {
       .ExcalidrawLogo-icon {
-        height: var(--logo-icon--normal);
+        height: 3.75rem;
       }
-
-      .ExcalidrawLogo-text {
-        height: var(--logo-text--normal);
+      .ExcalidrawLogo-title {
+        font-size: 2.5rem;
+      }
+      .ExcalidrawLogo-subtitle {
+        font-size: 1.2rem;
       }
     }
 
     &.is-large {
       .ExcalidrawLogo-icon {
-        height: var(--logo-icon--large);
+        height: 4.75rem;
       }
+      .ExcalidrawLogo-title {
+        font-size: 3.2rem;
+      }
+      .ExcalidrawLogo-subtitle {
+        font-size: 1.4rem;
+      }
+    }
+  }
 
-      .ExcalidrawLogo-text {
-        height: var(--logo-text--large);
+  &.theme--dark {
+    .ExcalidrawLogo {
+      .ExcalidrawLogo-title {
+        color: #ffffff;
+      }
+      .ExcalidrawLogo-subtitle {
+        color: var(--color-primary, #fb923c);
       }
     }
   }

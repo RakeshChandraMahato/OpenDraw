@@ -58,11 +58,7 @@ export const MobileMenu = ({
   app,
   onPenModeToggle,
 }: MobileMenuProps) => {
-  const {
-    WelcomeScreenCenterTunnel,
-    MainMenuTunnel,
-    DefaultSidebarTriggerTunnel,
-  } = useTunnels();
+  const { WelcomeScreenCenterTunnel, MainMenuTunnel } = useTunnels();
   const renderAppTopBar = () => {
     if (appState.openDialog?.name === "elementLinkSelector") {
       return null;
@@ -82,7 +78,6 @@ export const MobileMenu = ({
                   penDetected={appState.penDetected}
                 />
               )}
-              <DefaultSidebarTriggerTunnel.Out />
             </>
           ))}
         {defaultUIEnabled &&

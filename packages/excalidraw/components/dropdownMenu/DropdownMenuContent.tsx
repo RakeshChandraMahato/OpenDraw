@@ -21,6 +21,8 @@ const MenuContent = ({
   onSelect,
   open = true,
   align = "end",
+  side = "top",
+  sideOffset = 8,
   style,
 }: {
   children?: React.ReactNode;
@@ -33,6 +35,8 @@ const MenuContent = ({
   open?: boolean;
   style?: React.CSSProperties;
   align?: "start" | "center" | "end";
+  side?: "top" | "bottom" | "left" | "right";
+  sideOffset?: number;
 }) => {
   const editorInterface = useEditorInterface();
   const [menuNode, setMenuNode] = useCallbackRefState<HTMLDivElement>();
@@ -96,7 +100,9 @@ const MenuContent = ({
         style={style}
         data-testid="dropdown-menu"
         align={align}
-        sideOffset={8}
+        side={side}
+        sideOffset={sideOffset}
+        collisionPadding={16}
         onCloseAutoFocus={(event: Event) => event.preventDefault()}
       >
         {/* the zIndex ensures this menu has higher stacking order,

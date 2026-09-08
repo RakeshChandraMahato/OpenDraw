@@ -112,6 +112,9 @@ const ExtraToolsDropdown = ({
         onClickOutside={() => setIsExtraToolsMenuOpen(false)}
         onSelect={() => setIsExtraToolsMenuOpen(false)}
         className="App-toolbar__extra-tools-dropdown"
+        align="end"
+        side="top"
+        sideOffset={12}
       >
         <DropdownMenu.Item
           onSelect={() => app.setActiveTool({ type: "frame" })}

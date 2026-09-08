@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 import { THEME } from "@excalidraw/common";
 
 import type { Theme } from "@excalidraw/element/types";
@@ -37,15 +35,8 @@ import Trans from "../Trans";
 import DropdownMenuItem from "../dropdownMenu/DropdownMenuItem";
 import DropdownMenuItemCheckbox from "../dropdownMenu/DropdownMenuItemCheckbox";
 import DropdownMenuItemContentRadio from "../dropdownMenu/DropdownMenuItemContentRadio";
-import DropdownMenuItemLink from "../dropdownMenu/DropdownMenuItemLink";
 import DropdownMenuSub from "../dropdownMenu/DropdownMenuSub";
-import {
-  GithubIcon,
-  DiscordIcon,
-  XBrandIcon,
-  settingsIcon,
-  emptyIcon,
-} from "../icons";
+import { settingsIcon, emptyIcon } from "../icons";
 import {
   boltIcon,
   DeviceDesktopIcon,
@@ -58,7 +49,6 @@ import {
   searchIcon,
   SunIcon,
   TrashIcon,
-  usersIcon,
 } from "../icons";
 
 import "./DefaultItems.scss";
@@ -367,56 +357,18 @@ export const Export = () => {
 Export.displayName = "Export";
 
 export const Socials = () => {
-  const { t } = useI18n();
-
-  return (
-    <>
-      <DropdownMenuItemLink
-        icon={GithubIcon}
-        href="https://github.com/excalidraw/excalidraw"
-        aria-label="GitHub"
-      >
-        GitHub
-      </DropdownMenuItemLink>
-      <DropdownMenuItemLink
-        icon={XBrandIcon}
-        href="https://x.com/excalidraw"
-        aria-label="X"
-      >
-        {t("labels.followUs")}
-      </DropdownMenuItemLink>
-      <DropdownMenuItemLink
-        icon={DiscordIcon}
-        href="https://discord.gg/UexuTaE"
-        aria-label="Discord"
-      >
-        {t("labels.discordChat")}
-      </DropdownMenuItemLink>
-    </>
-  );
+  return null;
 };
 Socials.displayName = "Socials";
 
 export const LiveCollaborationTrigger = ({
-  onSelect,
-  isCollaborating,
+  onSelect: _onSelect,
+  isCollaborating: _isCollaborating,
 }: {
-  onSelect: () => void;
-  isCollaborating: boolean;
-}) => {
-  const { t } = useI18n();
-  return (
-    <DropdownMenuItem
-      data-testid="collab-button"
-      icon={usersIcon}
-      className={clsx({
-        "active-collab": isCollaborating,
-      })}
-      onSelect={onSelect}
-    >
-      {t("labels.liveCollaboration")}
-    </DropdownMenuItem>
-  );
+  onSelect?: () => void;
+  isCollaborating?: boolean;
+} = {}) => {
+  return null;
 };
 
 LiveCollaborationTrigger.displayName = "LiveCollaborationTrigger";

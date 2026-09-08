@@ -4,7 +4,6 @@ import React from "react";
 import {
   CLASSES,
   DEFAULT_SIDEBAR,
-  TOOL_TYPE,
   arrayToMap,
   capitalizeString,
   isShallowEqual,
@@ -18,7 +17,7 @@ import { ShapeCache } from "@excalidraw/element";
 
 import type { NonDeletedExcalidrawElement } from "@excalidraw/element/types";
 
-import { actionToggleStats } from "../actions";
+import { actionShortcuts, actionToggleStats } from "../actions";
 import { trackEvent } from "../analytics";
 import { TunnelsContext, useInitializeTunnels } from "../context/tunnels";
 import { UIAppStateContext } from "../context/ui-appState";
@@ -27,15 +26,19 @@ import { useAtom, useAtomValue } from "../editor-jotai";
 import { t } from "../i18n";
 import { getScrollToContentState } from "../scene";
 
-import { SelectedShapeActions, CompactShapeActions } from "./Actions";
+import {
+  SelectedShapeActions,
+  CompactShapeActions,
+  ExitZenModeButton,
+  UndoRedoActions,
+  ZoomActions,
+} from "./Actions";
+import { HelpButton } from "./HelpButton";
 import { LoadingMessage } from "./LoadingMessage";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
-import Stack from "./Stack";
-import { UserList } from "./UserList";
 import { PenModeButton } from "./PenModeButton";
-import Footer from "./footer/Footer";
 import { isSidebarDockedAtom } from "./Sidebar/Sidebar";
 import MainMenu from "./main-menu/MainMenu";
 import { ActiveConfirmDialog } from "./ActiveConfirmDialog";
@@ -48,12 +51,10 @@ import { Stats } from "./Stats";
 import ElementLinkDialog from "./ElementLinkDialog";
 import { ErrorDialog } from "./ErrorDialog";
 import { EyeDropper, activeEyeDropperAtom } from "./EyeDropper";
-import { FixedSideContainer } from "./FixedSideContainer";
 import { HelpDialog } from "./HelpDialog";
 import { ImageExportDialog } from "./ImageExportDialog";
 import { Island } from "./Island";
 import { JSONExportDialog } from "./JSONExportDialog";
-import { LaserPointerButton } from "./LaserPointerButton";
 import { Toast } from "./Toast";
 import { Toolbar } from "./Toolbar";
 import {
@@ -120,10 +121,6 @@ const DefaultMainMenu: React.FC<{
       <MainMenu.DefaultItems.Help />
       <MainMenu.DefaultItems.ClearCanvas />
       <MainMenu.Separator />
-      <MainMenu.Group title="Excalidraw links">
-        <MainMenu.DefaultItems.Socials />
-      </MainMenu.Group>
-      <MainMenu.Separator />
       <MainMenu.DefaultItems.ToggleTheme allowSystemTheme={false} />
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>
@@ -170,24 +167,6 @@ const LayerUI = ({
   const isCompactStylesPanel = stylesPanelMode === "compact";
   const tunnels = useInitializeTunnels();
 
-  const spacing = isCompactStylesPanel
-    ? {
-        menuTopGap: 4,
-        toolbarColGap: 4,
-        toolbarRowGap: 1,
-        toolbarInnerRowGap: 0.5,
-        islandPadding: 1,
-        collabMarginLeft: 8,
-      }
-    : {
-        menuTopGap: 6,
-        toolbarColGap: 4,
-        toolbarRowGap: 1,
-        toolbarInnerRowGap: 1,
-        islandPadding: 1,
-        collabMarginLeft: 8,
-      };
-
   const TunnelsJotaiProvider = tunnels.tunnelsJotai.Provider;
 
   const [eyeDropperState, setEyeDropperState] = useAtom(activeEyeDropperAtom);
@@ -232,8 +211,13 @@ const LayerUI = ({
   };
 
   const renderCanvasActions = () => (
-    <div style={{ position: "relative" }}>
-      <div className="excalidraw-ui-top-left">
+    <div
+      style={{ position: "relative", display: "flex", alignItems: "center" }}
+    >
+      <div
+        className="excalidraw-ui-top-left"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         {renderTopLeftUI?.(false, appState)}
         <tunnels.MainMenuTunnel.Out />
       </div>
@@ -256,9 +240,7 @@ const LayerUI = ({
             data-viewport-ui="side"
             data-viewport-ui-name="stylesPanel"
             style={{
-              // we want to make sure this doesn't overflow so subtracting the
-              // approximate height of hamburgerMenu + footer
-              maxHeight: `${appState.height - 166}px`,
+              maxHeight: `${Math.max(120, appState.height - 90)}px`,
             }}
           >
             <CompactShapeActions
@@ -274,9 +256,7 @@ const LayerUI = ({
             className={CLASSES.SHAPE_ACTIONS_MENU}
             padding={2}
             style={{
-              // we want to make sure this doesn't overflow so subtracting the
-              // approximate height of hamburgerMenu + footer
-              maxHeight: `${appState.height - 166}px`,
+              maxHeight: `${Math.max(120, appState.height - 90)}px`,
             }}
             data-viewport-ui="side"
             data-viewport-ui-name="stylesPanel"
@@ -293,146 +273,15 @@ const LayerUI = ({
     );
   };
 
-  const renderFixedSideContainer = () => {
-    const shouldRenderSelectedShapeActions =
-      defaultUIEnabled && showSelectedShapeActions(appState, elements);
+  const shouldRenderSelectedShapeActions =
+    defaultUIEnabled && showSelectedShapeActions(appState, elements);
 
-    const shouldShowStats =
-      defaultUIEnabled &&
-      appState.stats.open &&
-      !appState.zenModeEnabled &&
-      !appState.viewModeEnabled &&
-      appState.openDialog?.name !== "elementLinkSelector";
-
-    return (
-      <FixedSideContainer side="top">
-        <div className="App-menu App-menu_top">
-          <Stack.Col
-            gap={spacing.menuTopGap}
-            className={clsx("App-menu_top__left")}
-          >
-            {renderCanvasActions()}
-            {defaultUIEnabled && (
-              <div
-                className={clsx("selected-shape-actions-container", {
-                  "selected-shape-actions-container--compact":
-                    isCompactStylesPanel,
-                })}
-              >
-                {shouldRenderSelectedShapeActions &&
-                  renderSelectedShapeActions()}
-              </div>
-            )}
-            {/* in compact UI the pen mode button lives outside the toolbar, as
-                a separate floating button below the compact actions menu
-                (same as we render it on mobile); shown alongside the compact
-                actions island, i.e. when a drawing tool or elements are
-                selected */}
-            {defaultUIEnabled &&
-              isCompactStylesPanel &&
-              !appState.viewModeEnabled &&
-              shouldRenderSelectedShapeActions && (
-                <PenModeButton
-                  checked={appState.penMode}
-                  onChange={() => onPenModeToggle(null)}
-                  title={t("toolBar.penMode")}
-                  isMobile
-                  penDetected={appState.penDetected}
-                />
-              )}
-          </Stack.Col>
-          {defaultUIEnabled &&
-            !appState.viewModeEnabled &&
-            appState.openDialog?.name !== "elementLinkSelector" && (
-              <Section heading="shapes" className="shapes-section">
-                {(heading: React.ReactNode) => (
-                  <div style={{ position: "relative" }}>
-                    {renderWelcomeScreen && (
-                      <tunnels.WelcomeScreenToolbarHintTunnel.Out />
-                    )}
-                    <Stack.Col gap={spacing.toolbarColGap} align="start">
-                      <Stack.Row
-                        gap={spacing.toolbarRowGap}
-                        className={clsx("App-toolbar-container", {
-                          "zen-mode": appState.zenModeEnabled,
-                        })}
-                      >
-                        <Toolbar
-                          app={app}
-                          appState={appState}
-                          setAppState={setAppState}
-                          UIOptions={UIOptions}
-                          onPenModeToggle={onPenModeToggle}
-                          onLockToggle={onLockToggle}
-                          heading={heading}
-                        />
-                        {isCollaborating && (
-                          <Island
-                            style={{
-                              marginLeft: spacing.collabMarginLeft,
-                              alignSelf: "center",
-                              height: "fit-content",
-                            }}
-                          >
-                            <LaserPointerButton
-                              title={t("toolBar.laser")}
-                              checked={
-                                appState.activeTool.type === TOOL_TYPE.laser
-                              }
-                              onChange={() =>
-                                app.setActiveTool({ type: TOOL_TYPE.laser })
-                              }
-                              isMobile
-                            />
-                          </Island>
-                        )}
-                      </Stack.Row>
-                    </Stack.Col>
-                  </div>
-                )}
-              </Section>
-            )}
-          <div
-            className={clsx(
-              "layer-ui__wrapper__top-right zen-mode-transition",
-              {
-                "transition-right": appState.zenModeEnabled,
-                "layer-ui__wrapper__top-right--compact": isCompactStylesPanel,
-              },
-            )}
-          >
-            {defaultUIEnabled && appState.collaborators.size > 0 && (
-              <UserList
-                collaborators={appState.collaborators}
-                userToFollow={appProps.userToFollow?.socketId || null}
-                currentUserControls={currentUserControls}
-              />
-            )}
-            {renderTopRightUI?.(
-              editorInterface.formFactor === "phone",
-              appState,
-            )}
-            {!appState.viewModeEnabled &&
-              appState.openDialog?.name !== "elementLinkSelector" &&
-              // hide button when sidebar docked
-              (!isSidebarDocked ||
-                appState.openSidebar?.name !== DEFAULT_SIDEBAR.name) && (
-                <tunnels.DefaultSidebarTriggerTunnel.Out />
-              )}
-            {shouldShowStats && (
-              <Stats
-                app={app}
-                onClose={() => {
-                  actionManager.executeAction(actionToggleStats);
-                }}
-                renderCustomStats={renderCustomStats}
-              />
-            )}
-          </div>
-        </div>
-      </FixedSideContainer>
-    );
-  };
+  const shouldShowStats =
+    defaultUIEnabled &&
+    appState.stats.open &&
+    !appState.zenModeEnabled &&
+    !appState.viewModeEnabled &&
+    appState.openDialog?.name !== "elementLinkSelector";
 
   const renderSidebars = () => {
     if (!defaultUIEnabled) {
@@ -636,15 +485,106 @@ const LayerUI = ({
             }
           >
             {renderWelcomeScreen && <tunnels.WelcomeScreenCenterTunnel.Out />}
-            {renderFixedSideContainer()}
-            <Footer
-              appState={appState}
-              actionManager={actionManager}
-              showExitZenModeBtn={showExitZenModeBtn}
-              renderWelcomeScreen={renderWelcomeScreen}
-              defaultUIEnabled={defaultUIEnabled}
-              zoomUIEnabled={zoomUIEnabled}
-            />
+
+            {/* Selected shape actions (properties panel floats on left side above bottom bar) */}
+            {defaultUIEnabled && shouldRenderSelectedShapeActions && (
+              <div
+                className={clsx("opendraw-selected-shape-actions", {
+                  "opendraw-selected-shape-actions--compact":
+                    isCompactStylesPanel,
+                })}
+              >
+                {renderSelectedShapeActions()}
+                {isCompactStylesPanel && !appState.viewModeEnabled && (
+                  <PenModeButton
+                    checked={appState.penMode}
+                    onChange={() => onPenModeToggle(null)}
+                    title={t("toolBar.penMode")}
+                    isMobile
+                    penDetected={appState.penDetected}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Single unified line for all bottom controls */}
+            <div className="opendraw-bottom-bar App-menu App-menu_bottom">
+              {/* Left group: Undo/Redo, Zoom */}
+              <div className="opendraw-bottom-bar__left">
+                {defaultUIEnabled && !appState.viewModeEnabled && (
+                  <UndoRedoActions
+                    renderAction={actionManager.renderAction}
+                    className="zen-mode-transition"
+                  />
+                )}
+                {zoomUIEnabled && app.isNavigationEnabled() && (
+                  <ZoomActions renderAction={actionManager.renderAction} />
+                )}
+              </div>
+
+              {/* Center group: Shapes & Drawing Tools Toolbar + Menu button */}
+              <div className="opendraw-bottom-bar__center">
+                {defaultUIEnabled &&
+                  !appState.viewModeEnabled &&
+                  appState.openDialog?.name !== "elementLinkSelector" && (
+                    <Section heading="shapes" className="shapes-section">
+                      {(heading: React.ReactNode) => (
+                        <div style={{ position: "relative" }}>
+                          {renderWelcomeScreen && (
+                            <tunnels.WelcomeScreenToolbarHintTunnel.Out />
+                          )}
+                          <Toolbar
+                            app={app}
+                            appState={appState}
+                            setAppState={setAppState}
+                            UIOptions={UIOptions}
+                            onPenModeToggle={onPenModeToggle}
+                            onLockToggle={onLockToggle}
+                            heading={heading}
+                          />
+                        </div>
+                      )}
+                    </Section>
+                  )}
+                {renderCanvasActions()}
+              </div>
+
+              {/* Right group: Help, ExitZenMode */}
+              <div className="opendraw-bottom-bar__right">
+                <tunnels.FooterCenterTunnel.Out />
+                {defaultUIEnabled && (
+                  <div style={{ position: "relative" }}>
+                    {renderWelcomeScreen && (
+                      <tunnels.WelcomeScreenHelpHintTunnel.Out />
+                    )}
+                    <HelpButton
+                      onClick={() =>
+                        actionManager.executeAction(actionShortcuts)
+                      }
+                    />
+                  </div>
+                )}
+                {defaultUIEnabled && (
+                  <ExitZenModeButton
+                    actionManager={actionManager}
+                    showExitZenModeBtn={showExitZenModeBtn}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Custom Stats if active */}
+            {shouldShowStats && (
+              <div className="opendraw-stats">
+                <Stats
+                  app={app}
+                  onClose={() => {
+                    actionManager.executeAction(actionToggleStats);
+                  }}
+                  renderCustomStats={renderCustomStats}
+                />
+              </div>
+            )}
             {(appState.toast ||
               (scrollBackToContentUIEnabled && appState.scrolledOutside) ||
               appProps.viewportStatusFrame?.label) && (

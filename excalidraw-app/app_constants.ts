@@ -47,6 +47,10 @@ export const STORAGE_KEYS = {
 
   IDB_LIBRARY: "excalidraw-library",
   IDB_TTD_CHATS: "excalidraw-ttd-chats",
+  IDB_BOARDS: "opendraw-boards",
+
+  BOARDS_LIST: "opendraw-boards-list",
+  ACTIVE_BOARD_ID: "opendraw-active-board-id",
 
   // do not use apart from migrations
   __LEGACY_LOCAL_STORAGE_LIBRARY: "excalidraw-library",

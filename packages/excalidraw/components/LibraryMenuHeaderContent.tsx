@@ -19,13 +19,7 @@ import PublishLibrary from "./PublishLibrary";
 import { IconButton } from "./IconButton";
 import Trans from "./Trans";
 import DropdownMenu from "./dropdownMenu/DropdownMenu";
-import {
-  DotsIcon,
-  ExportIcon,
-  LoadIcon,
-  publishIcon,
-  TrashIcon,
-} from "./icons";
+import { DotsIcon, ExportIcon, LoadIcon, TrashIcon } from "./icons";
 
 import type Library from "../data/library";
 import type { LibraryItem, LibraryItems, UIAppState } from "../types";
@@ -218,15 +212,6 @@ export const LibraryDropdownMenuButton: React.FC<{
               data-testid="lib-dropdown--export"
             >
               {t("buttons.export")}
-            </DropdownMenu.Item>
-          )}
-          {itemsSelected && (
-            <DropdownMenu.Item
-              icon={publishIcon}
-              onSelect={() => setShowPublishLibraryDialog(true)}
-              data-testid="lib-dropdown--remove"
-            >
-              {t("buttons.publishLibrary")}
             </DropdownMenu.Item>
           )}
           {!!items.length && (

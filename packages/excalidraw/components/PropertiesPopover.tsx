@@ -54,6 +54,8 @@ export const PropertiesPopover = React.forwardRef<
           alignOffset={-16}
           sideOffset={20}
           collisionBoundary={container ?? undefined}
+          collisionPadding={16}
+          avoidCollisions={true}
           style={{
             zIndex: "var(--zIndex-ui-styles-popup)",
             marginLeft:

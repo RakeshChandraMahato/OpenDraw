@@ -92,8 +92,8 @@ export const saveAsJSON = async ({
 
   const savedFileHandle = await fileSave(blob, {
     name: filename,
-    extension: "excalidraw",
-    description: "Excalidraw file",
+    extension: "opraw",
+    description: "OpenDraw file",
     fileHandle: isImageFileHandle(fileHandle) ? null : fileHandle,
   });
   return { fileHandle: savedFileHandle };
@@ -104,10 +104,8 @@ export const loadFromJSON = async (
   localElements: readonly ExcalidrawElement[] | null,
 ) => {
   const file = await fileOpen({
-    description: "Excalidraw files",
-    // ToDo: Be over-permissive until https://bugs.webkit.org/show_bug.cgi?id=34442
-    // gets resolved. Else, iOS users cannot open `.excalidraw` files.
-    // extensions: ["json", "excalidraw", "png", "svg"],
+    description: "OpenDraw files",
+    extensions: ["opraw", "excalidraw", "json", "png", "svg"],
   });
   return loadFromBlob(file, localAppState, localElements, file.handle);
 };
@@ -118,7 +116,9 @@ export const isValidExcalidrawData = (data?: {
   appState?: any;
 }): data is ImportedDataState => {
   return (
-    data?.type === EXPORT_DATA_TYPES.excalidraw &&
+    (data?.type === EXPORT_DATA_TYPES.excalidraw ||
+      data?.type === "opendraw" ||
+      data?.type === "opraw") &&
     (!data.elements ||
       (Array.isArray(data.elements) &&
         (!data.appState || typeof data.appState === "object")))

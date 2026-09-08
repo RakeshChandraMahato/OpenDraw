@@ -45,6 +45,7 @@ import { FileManager } from "./FileManager";
 import { FileStatusStore } from "./fileStatusStore";
 import { Locker } from "./Locker";
 import { updateBrowserStateVersion } from "./tabSync";
+import { getActiveBoardId, saveBoardData } from "./boardsManager";
 
 const filesStore = createStore("files-db", "files-store");
 
@@ -123,6 +124,10 @@ export class LocalData {
       onFilesSaved: () => void,
     ) => {
       saveDataStateToLocalStorage(elements, appState);
+      const activeBoardId = getActiveBoardId();
+      if (activeBoardId) {
+        saveBoardData(activeBoardId, elements, appState);
+      }
 
       await this.fileStorage.saveFiles({
         elements,

@@ -9,7 +9,7 @@ import { COLOR_PALETTE } from "./colors";
 export const supportsResizeObserver =
   typeof window !== "undefined" && "ResizeObserver" in window;
 
-export const APP_NAME = "Excalidraw";
+export const APP_NAME = "OpenDraw";
 
 // distance when creating text before it's considered `autoResize: false`
 // we're using higher threshold so that clicks that end up being drags
@@ -250,7 +250,8 @@ export const STRING_MIME_TYPES = {
   text: "text/plain",
   html: "text/html",
   json: "application/json",
-  // excalidraw data
+  // opendraw / excalidraw data
+  opraw: "application/vnd.opendraw+json",
   excalidraw: "application/vnd.excalidraw+json",
   excalidrawClipboard: "application/vnd.excalidraw.clipboard+json",
   // LEGACY: fully-qualified library JSON data
@@ -261,7 +262,9 @@ export const STRING_MIME_TYPES = {
 
 export const MIME_TYPES = {
   ...STRING_MIME_TYPES,
-  // image-encoded excalidraw data
+  // image-encoded opendraw / excalidraw data
+  "opraw.svg": "image/svg+xml",
+  "opraw.png": "image/png",
   "excalidraw.svg": "image/svg+xml",
   "excalidraw.png": "image/png",
   // binary

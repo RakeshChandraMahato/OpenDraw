@@ -1,5 +1,7 @@
 node_modules/
 build/
+**/build/**
+**/dist/**
 package-lock.json
 .vscode/
 firebase/

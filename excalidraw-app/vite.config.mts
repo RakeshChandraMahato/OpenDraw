@@ -133,7 +133,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       Sitemap({
-        hostname: "https://excalidraw.com",
+        hostname: "https://opendraw.pages.dev",
         outDir: "build",
         changefreq: "monthly",
         // its static in public folder
@@ -226,15 +226,32 @@ export default defineConfig(({ mode }) => {
           maximumFileSizeToCacheInBytes: 2.3 * 1024 ** 2, // 2.3MB
         },
         manifest: {
-          short_name: "Excalidraw",
-          name: "Excalidraw",
+          short_name: "OpenDraw",
+          name: "OpenDraw Whiteboard",
           description:
-            "Excalidraw is a whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them.",
+            "OpenDraw is an offline whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them.",
           icons: [
             {
               src: "android-chrome-192x192.png",
               sizes: "192x192",
               type: "image/png",
+            },
+            {
+              src: "android-chrome-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+            },
+            {
+              src: "maskable_icon_x192.png",
+              sizes: "192x192",
+              type: "image/png",
+              purpose: "maskable",
+            },
+            {
+              src: "maskable_icon_x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
             },
             {
               src: "apple-touch-icon.png",
@@ -253,15 +270,15 @@ export default defineConfig(({ mode }) => {
             },
           ],
           start_url: "/",
-          id: "excalidraw",
+          id: "opendraw",
           display: "standalone",
-          theme_color: "#121212",
+          theme_color: "#ea580c",
           background_color: "#ffffff",
           file_handlers: [
             {
               action: "/",
               accept: {
-                "application/vnd.excalidraw+json": [".excalidraw"],
+                "application/vnd.excalidraw+json": [".opraw", ".excalidraw"],
               },
             },
           ],
@@ -276,6 +293,7 @@ export default defineConfig(({ mode }) => {
                   accept: [
                     "application/vnd.excalidraw+json",
                     "application/json",
+                    ".opraw",
                     ".excalidraw",
                   ],
                 },
