@@ -485,6 +485,9 @@ body.excalidraw-cursor-resize * {
     }
 
     &__center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       justify-content: center;
 
       .shapes-section {
