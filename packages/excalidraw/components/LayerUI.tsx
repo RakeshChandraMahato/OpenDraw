@@ -509,16 +509,16 @@ const LayerUI = ({
 
             {/* Single unified line for all bottom controls */}
             <div className="opendraw-bottom-bar App-menu App-menu_bottom">
-              {/* Left group: Undo/Redo, Zoom */}
+              {/* Left group: Zoom, Undo/Redo */}
               <div className="opendraw-bottom-bar__left">
+                {zoomUIEnabled && app.isNavigationEnabled() && (
+                  <ZoomActions renderAction={actionManager.renderAction} />
+                )}
                 {defaultUIEnabled && !appState.viewModeEnabled && (
                   <UndoRedoActions
                     renderAction={actionManager.renderAction}
                     className="zen-mode-transition"
                   />
-                )}
-                {zoomUIEnabled && app.isNavigationEnabled() && (
-                  <ZoomActions renderAction={actionManager.renderAction} />
                 )}
               </div>
 
