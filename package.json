@@ -4,8 +4,7 @@
   "packageManager": "pnpm@10.17.1",
   "workspaces": [
     "excalidraw-app",
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -57,7 +56,6 @@
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
     "build-node": "node ./scripts/build-node.js",
-    "build:app:docker": "pnpm --filter excalidraw-app build:app:docker",
     "build:app": "pnpm --filter excalidraw-app build:app",
     "build:common": "pnpm --filter @excalidraw/common build:esm",
     "build:element": "pnpm --filter @excalidraw/element build:esm",
@@ -71,7 +69,6 @@
     "build:preview": "pnpm --filter excalidraw-app build:preview",
     "start": "pnpm --filter excalidraw-app start",
     "start:production": "pnpm --filter excalidraw-app start:production",
-    "start:example": "pnpm build:packages && pnpm --filter ./examples/with-script-in-browser start",
     "test:all": "pnpm test:typecheck && pnpm test:code && pnpm test:other && pnpm test:app --watch=false",
     "test:app": "vitest",
     "test:code": "eslint --max-warnings=0 --ext .js,.ts,.tsx .",
@@ -93,7 +90,7 @@
     "release:test": "node scripts/release.js --tag=test",
     "release:next": "node scripts/release.js --tag=next",
     "release:latest": "node scripts/release.js --tag=latest",
-    "rm:build": "rimraf --glob excalidraw-app/build excalidraw-app/dist excalidraw-app/dev-dist packages/*/dist packages/*/build examples/*/build examples/*/dist",
+    "rm:build": "rimraf --glob excalidraw-app/build excalidraw-app/dist excalidraw-app/dev-dist packages/*/dist packages/*/build",
     "rm:node_modules": "rimraf --glob node_modules excalidraw-app/node_modules packages/*/node_modules",
     "clean-install": "pnpm rm:node_modules && pnpm install"
   },
