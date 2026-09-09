@@ -33,12 +33,10 @@
       display: none !important;
     }
 
-    @media (max-width: 1024px), (max-width: 800px) {
-      .welcome-screen-decor {
-        &--help,
-        &--menu {
-          display: none;
-        }
+    @media (max-width: 980px) {
+      &--help,
+      &--menu {
+        display: none !important;
       }
     }
 
@@ -94,7 +92,8 @@
 
     &--menu {
       position: absolute;
-      width: 320px;
+      width: max-content;
+      max-width: 320px;
       font-size: 1rem;
 
       bottom: 100%;
@@ -108,16 +107,32 @@
       svg {
         width: 41px;
         height: 94px;
+        flex-shrink: 0;
 
         :root[dir="rtl"] & {
           transform: scaleX(-1);
         }
       }
 
-      @media (max-width: 860px) {
-        .welcome-screen-decor-hint__label {
-          max-width: 160px;
+      @media (max-width: 1024px) {
+        right: 0;
+        left: auto;
+        margin-inline-start: 0;
+        flex-direction: row-reverse;
+        max-width: min(260px, 35vw);
+
+        svg {
+          transform: scaleX(-1);
         }
+
+        .welcome-screen-decor-hint__label {
+          max-width: 180px;
+          text-align: right;
+        }
+      }
+
+      @media (max-width: 860px) {
+        display: none;
       }
     }
   }
