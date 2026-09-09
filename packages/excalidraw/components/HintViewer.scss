@@ -11,17 +11,25 @@ $wide-viewport-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    left: 0;
-    top: 100%;
-    max-width: 100%;
-    width: 100%;
-    margin-top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    top: auto;
+    width: max-content;
+    max-width: min(650px, calc(100vw - 2rem));
+    margin-bottom: 0.5rem;
+    margin-top: 0;
     text-align: center;
     color: var(--color-gray-40);
     font-size: 0.75rem;
 
     @include isMobile {
       position: static;
+      left: auto;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 0;
       padding-right: 2rem;
     }
 
