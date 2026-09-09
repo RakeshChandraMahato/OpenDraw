@@ -11,7 +11,7 @@ const LogoIcon = () => (
 const LogoText = () => (
   <div className="ExcalidrawLogo-text">
     <span className="ExcalidrawLogo-title">OpenDraw</span>
-    <span className="ExcalidrawLogo-subtitle">made by RakeshXapp</span>
+    <span className="ExcalidrawLogo-subtitle">by RakeshXapp</span>
   </div>
 );
 
